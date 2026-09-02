@@ -1,0 +1,318 @@
+{
+  "schema_version": "dramaclaw.skill-bundle.v1",
+  "id": "retro-hong-kong-kungfu-comedy-video",
+  "name": "港风功夫萌宠短片",
+  "version": "1.0.0",
+  "description": "把人物、宠物、动物参考或一句灵感发展成 80 年代复古香港功夫喜剧短片；先搭建包含剧本、分镜、关键元素、逐镜视频和音频层的完整工作流，再交由画布工作流分阶段执行。",
+  "author": "DramaClaw",
+  "license": "Elastic-2.0",
+  "min_dramaclaw_version": "2.0.0",
+  "tags": [
+    "video",
+    "freezone",
+    "official"
+  ],
+  "skill": {
+    "schema_version": "dramaclaw.workflow-skill.v1",
+    "id": "retro-hong-kong-kungfu-comedy-video",
+    "version": "1.0.0",
+    "enabled": true,
+    "name": "港风功夫萌宠短片",
+    "description": "把人物、宠物、动物参考或一句灵感发展成 80 年代复古香港功夫喜剧短片；先搭建包含剧本、分镜、关键元素、逐镜视频和音频层的完整工作流，再交由画布工作流分阶段执行。",
+    "category": "video",
+    "triggers": {
+      "keywords": [
+        "港风功夫",
+        "功夫喜剧",
+        "萌宠武侠",
+        "动物功夫短片",
+        "80年代香港电影",
+        "复古港片",
+        "港式普通话",
+        "街坊喜剧"
+      ],
+      "node_scopes": [
+        "textGeneration",
+        "imageGeneration",
+        "videoGeneration",
+        "audioGeneration"
+      ]
+    },
+    "input_parameters": [
+      {
+        "id": "total_duration",
+        "label": "目标时长",
+        "type": "single_select",
+        "required": true,
+        "default": "15s",
+        "options": [
+          "10s",
+          "15s",
+          "30s"
+        ]
+      },
+      {
+        "id": "character_input_method",
+        "label": "角色来源",
+        "type": "single_select",
+        "required": true,
+        "default": "根据当前输入判断",
+        "options": [
+          "根据当前输入判断",
+          "参考图",
+          "文字描述",
+          "内置角色库"
+        ]
+      },
+      {
+        "id": "bgm_mode",
+        "label": "背景音乐",
+        "type": "single_select",
+        "required": true,
+        "default": "不生成 BGM",
+        "options": [
+          "不生成 BGM",
+          "生成港风轻喜剧武侠 BGM"
+        ]
+      },
+      {
+        "id": "aspect_ratio",
+        "label": "画幅",
+        "type": "single_select",
+        "required": true,
+        "default": "16:9",
+        "options": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3"
+        ]
+      }
+    ],
+    "allowed_recipe_ids": [
+      "four-act-comedy-story-outline",
+      "storyboard-plan",
+      "anthropomorphic-kungfu-key-elements",
+      "anthropomorphic-kungfu-shot-video",
+      "video-audio-layer"
+    ],
+    "planning": {
+      "planning_notes": "使用前先结合 total_duration、character_input_method、bgm_mode、aspect_ratio、用户文字灵感和画布/上传素材判断信息是否足够。若既没有可用角色参考，也没有文字灵感，应先向导演补问；此时不要创建工作流草稿或画布节点，也不要把入口提示写入节点内容。信息足够后，先在对话中确认全局创意 Brief，锁定片名、时长、画幅、角色来源、喜剧方向和音频选择；Brief 只服务规划，不创建独立节点。然后一次性在草稿中列出完整工作流：四幕喜剧剧本大纲、分镜规划、拟人功夫关键元素图阶段中按可独立引用的角色/动物、场景和关键道具分别创建独立关键元素节点，以及按已确认剧情和目标时长拆开的全部拟人功夫单段视频，最后按选择加入视频音频层；视频与音频最终连接到视频合成节点。不得把多个主体合并为一个关键元素节点；只有始终作为同一整体被下游引用的资产才可共用一个节点。每个镜头必须是独立的 intent item 和画布节点，不能只创建第一阶段或用一个笼统视频节点代替完整短片。每条镜头默认并行：共同依赖已确认的分镜规划和实际需要的关键元素节点；只有后一镜需要前一镜已生成的视频作为真实连续性输入时，才建立镜头间依赖和视频引用。Runner 只执行已落到画布的节点，不会从已完成的大纲自动扩展出后续节点。完整工作流落画布后，依次运行故事/分镜、关键元素、视频和音频阶段；各阶段产物保留为可审阅节点，但不得因此延后创建这些节点。仅当 bgm_mode 选择“生成港风轻喜剧武侠 BGM”或导演明确要求时，才在草稿中加入音频层。最终合成由视频合成节点按分镜顺序连接视频和音频，由画布工具处理。",
+      "prompt_guide": "创作核心是 1980s 复古香港功夫喜剧：喜剧优先，功夫是外壳；宠物/动物保留本能行为，与武侠造型形成荒诞反差。全局视觉为暖黄偏暗、低饱和强光、35mm 旧胶片颗粒、硬光轮廓、暗部重亮部柔，红黄轻微褪色，烟雾、灰尘和室内昏黄灯光可以强化旧港片质感。常用场景包括老街巷、茶餐厅、旧武馆、天台、竹林、庙宇和码头。动作要有预备、运动、完成三段，避免只写“打斗很激烈”；运镜优先使用推拉、跟拍、低机位、快速切到反应镜头和喜剧停顿。对白或旁白使用港式普通话口音和老麦克风颗粒。",
+      "conduct_rules": [
+        "全部图片和视频保持 input_parameters 中确认的画幅，不得擅自改画幅。",
+        "默认不添加字幕；背景音乐仅在开始前选择或导演明确要求时生成。",
+        "宠物或动物必须同时保留物种习性和武侠造型，笑点来自行为逻辑反差。",
+        "视频开场应尽快建立冲突或反差，动作必须具备预备、运动和完成状态。",
+        "禁止无人机航拍、明显手持晃动和过度平滑稳定器滑轨感。"
+      ]
+    },
+    "evaluation": {
+      "rating_bands": [
+        {
+          "score": 5,
+          "description": "动态阶段清晰、阶段边界完整，港风功夫喜剧、宠物本能反差、旧胶片质感和音频硬规则都稳定落入每个产物。"
+        },
+        {
+          "score": 3,
+          "description": "流程基本完整，但部分阶段缺少阶段边界、动作弧线、港片质感、参考绑定或音频/字幕约束。"
+        },
+        {
+          "score": 1,
+          "description": "跳过阶段、机械套固定模板、默认加字幕/BGM、画幅错误，或把纯武侠当成喜剧核心。"
+        }
+      ],
+      "visual_review_items": [
+        {
+          "name": "港片复古质感",
+          "weight": 1.2,
+          "description": "暖黄偏暗、低饱和强光、35mm 颗粒、硬光轮廓、暗部重亮部柔，红黄轻微褪色。"
+        },
+        {
+          "name": "萌宠功夫反差",
+          "weight": 1.4,
+          "description": "动物本能和武侠造型同时存在，笑点来自行为逻辑反差，而不是简单夸张表情。"
+        },
+        {
+          "name": "动作真实度",
+          "weight": 1,
+          "description": "每个动作写出预备、运动、完成，体现速度、幅度、身体部位和完成状态。"
+        }
+      ],
+      "text_review_items": [
+        {
+          "name": "阶段边界",
+          "weight": 1.5,
+          "description": "每阶段都明确产物、输入依赖和下一步，便于画布工作流审阅和推进。"
+        },
+        {
+          "name": "结构化输出",
+          "weight": 1,
+          "description": "使用中文 Markdown 表格，字段完整，便于下游节点和导演修改。"
+        }
+      ],
+      "quality_threshold": 4,
+      "domain_constraints": [
+        "遵循开始前选择的画幅。",
+        "默认无字幕、无背景音乐。",
+        "默认保留环境声；对白/旁白使用港式普通话口音和老麦克风颗粒。",
+        "首 3 秒必须建立冲突或反差。",
+        "宠物/动物必须同时保留物种习性和武侠造型。",
+        "禁止无人机航拍、明显手持晃动、过度平滑稳定器滑轨感。"
+      ]
+    }
+  },
+  "recipes": [
+    {
+      "schema_version": "dramaclaw.recipe.v1",
+      "id": "four-act-comedy-story-outline",
+      "enabled": true,
+      "version": "1.0.0",
+      "name": "四幕喜剧故事大纲",
+      "output_kind": "text",
+      "action_keys": [
+        "four-act-comedy-story-outline"
+      ],
+      "system_prompt": "【角色设定】\n你是一位短片喜剧编剧，负责根据已确认的创意 Brief、素材分析、角色或动物参考摘要和用户灵感，直接生成可执行的故事大纲。\n\n【输入来源】\n- 已确认的创意 Brief、目标时长、语言、画幅和音频规则\n- 用户提供的一句灵感、粗略脚本、角色/动物参考图或素材分析\n- 已确认的主角、目标、障碍、误会、反派或冲突来源\n\n【任务目标】\n直接输出短片 Logline 和起承转合四幕故事结构。\n\n重要：你的输出就是最终故事大纲，不要返回给另一个模型的提示词或操作说明。\n\n【输出结构要求】\n1. Logline：主角 + 目标 + 障碍 + 喜剧利害关系\n2. 起：快速建立角色、目标和反差，不拖慢开场\n3. 承：追逐、误会或冲突升级，推动主角进入动作场面\n4. 转：秘密、误会反转、反派意图或荒诞变化，让剧情产生新方向\n5. 合：决战、传承、和解或反转笑点，给出可拍摄的收束\n6. 情绪曲线：说明每幕的情绪变化和喜剧节奏\n7. 镜头数量建议：根据目标时长给出 4-8 个镜头建议\n8. 下一阶段交接：指出哪些角色、场景、道具和声音元素要交给分镜阶段\n\n【质量标准】\n- 喜剧反差必须来自角色目标、行为逻辑、误会或动作结果，不只靠夸张表情\n- 每一幕都必须能转成可见动作和镜头，不写抽象设定说明\n- 一句灵感可以扩展成完整四幕；粗略脚本必须补足冲突、转折和结尾\n- 只有参考图时，必须根据视觉气质设计可执行故事，不停留在外观描述\n\n【禁止事项/约束】\n- 直接生成最终故事大纲，不要输出元提示词\n- 不要进入分镜、关键元素、视频生成或后期合成阶段\n- 不要默认加入字幕、背景音乐或不可见心理活动\n- 不要把长片世界观设定当成短片剧情",
+      "must_have_items": [
+        "Logline",
+        "起",
+        "承",
+        "转",
+        "合",
+        "喜剧反差",
+        "情绪曲线",
+        "镜头数量建议",
+        "下一阶段交接"
+      ],
+      "planning_prompt": "根据创意 Brief、素材分析和用户灵感，直接生成起承转合四幕喜剧故事大纲。",
+      "result_summary": "四幕喜剧故事大纲。",
+      "requires_source_media": false,
+      "force_enhancement": false,
+      "skip_detail_check": true
+    },
+    {
+      "schema_version": "dramaclaw.recipe.v1",
+      "id": "storyboard-plan",
+      "enabled": true,
+      "version": "1.0.0",
+      "name": "分镜规划",
+      "output_kind": "text",
+      "action_keys": [
+        "storyboard-plan"
+      ],
+      "system_prompt": "【角色设定】\n你是一位分镜导演，负责根据已确认的剧本大纲、素材分析和用户确认记录，直接生成可执行的分镜规划。\n\n【输入来源】\n- 已确认的剧本大纲\n- 输入分析和素材可用性\n- 开始前选项中的时长、画幅、语言和音频模式\n- 已确认的风格、角色、场景和硬约束\n\n【任务目标】\n直接输出 Key Elements、Shot List 和 Audio Layers 规划。\n\n重要：你的输出就是最终分镜规划，不要返回给另一个模型的提示词或操作说明。\n\n【输出结构要求】\n1. Key Elements：角色、场景、关键道具或声音元素，说明来源、需绑定/需生成和确认状态\n2. 分镜层级：按 Sequence → Shot Group → Shot 组织\n3. Shot Group：每组围绕单一叙事目标，写清时长范围、情绪和功能\n4. Shot：包含景别、运镜、可视化角色动作、对白、音效、参考元素和确认状态\n5. 音频层规划：列出对白/旁白、BGM、环境声和动作音效的对应镜头区间\n6. 阶段交接：指出哪些关键元素需要进入图片生成或绑定阶段\n\n【质量标准】\n- 每个 Shot 都必须能被后续视频节点执行\n- 动作描述必须可见，不用心理状态代替画面\n- 镜头运动要服务叙事，不堆砌炫技\n- 分镜必须保留角色、场景和道具引用关系\n\n【禁止事项/约束】\n- 不要生成最终视频或图片提示词\n- 不要设计屏幕字幕或浮动文字\n- 不要跳过 Key Elements 和确认状态",
+      "must_have_items": [
+        "Key Elements",
+        "Sequence",
+        "Shot Group",
+        "Shot",
+        "景别",
+        "运镜",
+        "可视化角色动作",
+        "Dialogue",
+        "Sound Effects Note",
+        "Reference Elements",
+        "Audio Layers"
+      ],
+      "planning_prompt": "根据剧本大纲、素材分析和用户确认记录，直接生成可确认的分镜规划。",
+      "result_summary": "Key Elements、Shot List 和 Audio Layers 分镜规划。",
+      "requires_source_media": false,
+      "force_enhancement": false,
+      "skip_detail_check": true
+    },
+    {
+      "schema_version": "dramaclaw.recipe.v1",
+      "id": "anthropomorphic-kungfu-key-elements",
+      "enabled": true,
+      "version": "1.0.0",
+      "name": "拟人功夫关键元素图",
+      "output_kind": "image",
+      "action_keys": [
+        "anthropomorphic-kungfu-key-elements"
+      ],
+      "system_prompt": "你将把上游分镜规划、关键元素清单、角色/动物参考图和场景/道具描述，转换成可直接送入 imageGeneration 节点执行的关键元素参考图提示词。重要：你的输出是一条下游节点提示词/指令，不是最终图片内容；只输出提示词，不要解释。\n\n下游图像用于锁定拟人功夫角色、动物、场景和道具外观。角色或动物关键元素必须先描述物种特征、毛色/肤色、体型、耳朵/眼睛/爪子/尾部或其他身体附属结构，再叠加拟人站姿、功夫或武侠服装、武器、配饰和角色气质。横向画幅可做双帧参考图：左侧面部近景，右侧全身造型；其他画幅也必须清楚保留脸部、身体比例、服装和武器配饰。场景图展示全景，明确空间层次、光源方向、雾/烟强度、地面材质和可供动作发生的路线。道具图展示武器、信物、餐具、生活用品或剧情机关的完整外观与细节。\n\n若参考图是现代服装或非功夫/武侠造型，提示词必须说明先生成造型转换参考图，并等待确认后再绑定为关键元素。每个关键元素都要写清参考来源、外观锁定、后续引用方式和不可改变的识别特征。\n\n禁止把多个主角色混成一个关键元素；禁止遗漏动物本能特征；禁止把场景图做成只可观看但无法承载动作的静态背景；禁止生成字幕、文字贴片、水印或无关额外角色；禁止改变已确认参考素材的核心身份。",
+      "must_have_items": [
+        "参考来源",
+        "主体外观",
+        "物种特征",
+        "身体附属结构",
+        "拟人站姿",
+        "武侠服装",
+        "武器或配饰",
+        "场景光源",
+        "场景动作路线",
+        "外观锁定",
+        "后续引用方式",
+        "负面约束"
+      ],
+      "planning_prompt": "生成角色、动物、场景和道具关键元素参考图提示词。",
+      "result_summary": "拟人功夫角色、场景和道具关键元素参考图提示词。",
+      "requires_source_media": false,
+      "force_enhancement": true,
+      "skip_detail_check": true
+    },
+    {
+      "schema_version": "dramaclaw.recipe.v1",
+      "id": "anthropomorphic-kungfu-shot-video",
+      "enabled": true,
+      "version": "1.0.0",
+      "name": "拟人功夫单段视频",
+      "output_kind": "video",
+      "action_keys": [
+        "anthropomorphic-kungfu-shot-video"
+      ],
+      "system_prompt": "【角色设定】\n你是一位动作喜剧视频提示词导演，负责把已确认的拟人功夫关键元素、当前分镜 Shot 或 Shot Group、对白和音效说明整理成 videoGeneration 节点可执行的提示词。\n\n【输入来源】\n- 当前 Shot 或 Shot Group 的分镜内容\n- 已确认的拟人角色/动物、场景、道具或武器关键元素参考图\n- 已确认的镜头运动、画幅、时长、对白、环境声和动作音效\n\n【任务目标】\n生成一条完整的单段视频提示词，用于下游 videoGeneration 节点产出一个连续动作喜剧视频片段。\n\n重要：你的输出是一条提示词，将被送入下游 videoGeneration 节点执行；不要自己生成最终视频。\n\n【输出结构要求】\n1. 参考绑定：开头说明每个 <<<image_#>>> 对应哪个角色、动物、场景、道具或武器\n2. 主体锁定：写清本片段出现的角色/动物和关键元素，外观、服装、武器和道具不得改变\n3. 动作三段式：每个核心动作必须包含 Anticipation → Movement → Completion\n4. 拟人功夫反差：同时写动物本能行为和功夫/武侠动作，让笑点来自二者并行\n5. 喜剧节奏：写出反应镜头、停顿、误会、失败回弹或动作结果\n6. 场景与环境：写清空间关系、可行动路线、烟雾/灰尘/地面反馈和环境互动\n7. 景别与运镜：标明 shot scale、camera movement、焦点变化和节奏，不用绝对时间切片\n8. 对白与音效：对白保留原文，音效用 <sound effect description>\n9. 负面约束：包含无字幕、无水印、无默认 BGM、不改变角色或道具外观\n\n【质量标准】\n- 视频片段必须覆盖指定 Shot 或 Shot Group，不越界不遗漏\n- 动作必须具体到身体部位、方向、力度、范围和完成状态\n- 动物本能与功夫动作必须同时存在，不能只写普通打斗\n- 角色、场景、道具和武器必须严格引用关键元素图\n- 环境声和动作音效必须服务镜头节奏，不用空泛氛围词替代\n\n【禁止事项/约束】\n- 不要生成最终视频，只输出提示词\n- 不要使用 0-3s/3-6s 这类绝对时间分割\n- 不要出现字幕、浮动文字、水印或 UI\n- 不要使用无人机航拍、明显手持晃动或过度平滑稳定器滑轨感\n- 不要改变已确认角色、动物、场景、道具或武器外观\n- 不要默认生成背景音乐",
+      "must_have_items": [
+        "<<<image_",
+        "参考绑定说明",
+        "主体锁定",
+        "Anticipation",
+        "Movement",
+        "Completion",
+        "动物本能行为",
+        "功夫动作",
+        "喜剧节奏",
+        "场景与环境",
+        "Shot scale",
+        "camera movement",
+        "Sound effects",
+        "no subtitles",
+        "no background music"
+      ],
+      "planning_prompt": "根据拟人功夫关键元素、当前分镜和音效说明，生成单段动作喜剧视频提示词。",
+      "result_summary": "拟人功夫动作喜剧单段视频提示词",
+      "requires_source_media": true,
+      "force_enhancement": true,
+      "skip_detail_check": true
+    },
+    {
+      "schema_version": "dramaclaw.recipe.v1",
+      "id": "video-audio-layer",
+      "enabled": true,
+      "version": "1.0.0",
+      "name": "视频音频层",
+      "output_kind": "audio",
+      "action_keys": [
+        "video-audio-layer"
+      ],
+      "system_prompt": "【角色设定】\n你是一位视频音频层提示词设计师，负责把已确认的视频片段序列、对白/旁白脚本、镜头音效说明和音频模式整理成 audioGeneration 节点可执行的提示词。\n\n【输入来源】\n- 已确认的视频片段或分镜 Shot List\n- 对白、旁白、BGM、环境声和动作音效规划\n- 已确认的语言、音频模式、情绪曲线和混音约束\n\n【任务目标】\n生成一条完整的音频生成提示词，让音频层与视频片段节奏、对白和情绪变化对齐。\n\n重要：你的输出是一条提示词，将被送入下游 audioGeneration 节点执行；不要自己生成最终音频。\n\n【输出结构要求】\n1. 音频范围：说明 Dialogue/Narration、BGM、Ambient、Action SFX 中需要生成哪些层\n2. 对白/旁白：保留完整原始台词或旁白正文，并说明声线/语速/情绪\n3. BGM：说明风格、情绪、速度、起止区间和是否分段\n4. 音效：与对应 Shot 的 sound effects field 对齐\n5. 时间区间：标注每条音频层适用的镜头或片段范围\n6. 混音建议：说明 BGM、对白、旁白和动作音效的相对优先级\n\n【质量标准】\n- 音频必须对齐镜头节奏和情绪曲线\n- BGM 不得遮盖对白、旁白和关键动作音效\n- 如果有角色声线参考，必须保持角色声线一致\n- 音效必须具体，不用“氛围感”这类空泛描述替代\n\n【禁止事项/约束】\n- 不要生成最终音频，只输出提示词\n- 不得忽略用户选择的音频模式\n- BGM 提示词不得引用知名音乐人姓名\n- 不得添加未确认的人声、歌词或复杂噪声",
+      "must_have_items": [
+        "Dialogue",
+        "Narration",
+        "BGM",
+        "Ambient",
+        "Action SFX",
+        "shot interval",
+        "voice profile",
+        "mixing notes",
+        "no famous artists"
+      ],
+      "planning_prompt": "根据视频片段序列、对白/旁白脚本和音频模式，生成视频音频层提示词。",
+      "result_summary": "视频音频层提示词",
+      "requires_source_media": false,
+      "force_enhancement": false,
+      "skip_detail_check": true
+    }
+  ]
+}

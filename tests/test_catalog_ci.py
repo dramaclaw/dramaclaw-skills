@@ -92,6 +92,25 @@ def write_bundle(root: Path, bundle: dict, *, path_id: str | None = None) -> Non
 
 
 class CatalogCiTest(unittest.TestCase):
+    def test_official_freezone_bundles_include_their_referenced_recipes(self) -> None:
+        expected_bundle_ids = {
+            "japanese-anime-drama-video",
+            "lego-minifigure-animation-video",
+            "ling-cage-cinematic-video",
+            "outdoor-stage-duel-video",
+            "retro-hong-kong-kungfu-comedy-video",
+        }
+
+        records = validate_repository(REPO_ROOT)
+
+        record_ids = {record.bundle_id for record in records}
+        self.assertTrue(expected_bundle_ids <= record_ids)
+        for record in records:
+            if record.bundle_id not in expected_bundle_ids:
+                continue
+            recipe_ids = {recipe["id"] for recipe in record.bundle["recipes"]}
+            self.assertEqual(set(record.bundle["skill"]["allowed_recipe_ids"]), recipe_ids)
+
     def test_validate_repository_accepts_skills_directory_bundle(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)

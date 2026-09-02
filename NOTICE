@@ -1,0 +1,22 @@
+DramaClaw Skills NOTICE
+
+Source attribution
+The following Bundles are derived from the DramaClaw repository's
+`freezone-canvas` revision a4c825462c634ad4fd565ca5f94ae456333bf310:
+
+- japanese-anime-drama-video
+- lego-minifigure-animation-video
+- ling-cage-cinematic-video
+- outdoor-stage-duel-video
+- retro-hong-kong-kungfu-comedy-video
+
+They have been repackaged as community Skill Bundles. Their source Skill and
+Recipe payloads are retained without content changes. They are licensed under
+the Elastic License 2.0; see LICENSES/Elastic-2.0.txt.
+
+Trademark notice
+SuperTale, DramaClaw, DramaClawAPI, and related product names, logos, service
+names, and visual brand assets are brand identifiers of their respective
+owners. The Elastic License 2.0 grant does not grant trademark rights or
+permission to remove product attribution, branding notices, or other
+reserved-rights notices from distributed copies.

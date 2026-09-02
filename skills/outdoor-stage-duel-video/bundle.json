@@ -1,0 +1,294 @@
+{
+  "schema_version": "dramaclaw.skill-bundle.v1",
+  "id": "outdoor-stage-duel-video",
+  "name": "户外舞台双人能力秀",
+  "version": "1.0.0",
+  "description": "把角色描述、能力类型、舞台场景或高潮结构发展成观众第一视角的户外舞台双人能力对决短片，按创意规格、分镜、关键元素、单镜视频和音频层分阶段推进。",
+  "author": "DramaClaw",
+  "license": "Elastic-2.0",
+  "min_dramaclaw_version": "2.0.0",
+  "tags": [
+    "video",
+    "freezone",
+    "official"
+  ],
+  "skill": {
+    "schema_version": "dramaclaw.workflow-skill.v1",
+    "id": "outdoor-stage-duel-video",
+    "version": "1.0.0",
+    "enabled": true,
+    "name": "户外舞台双人能力秀",
+    "description": "把角色描述、能力类型、舞台场景或高潮结构发展成观众第一视角的户外舞台双人能力对决短片，按创意规格、分镜、关键元素、单镜视频和音频层分阶段推进。",
+    "category": "video",
+    "triggers": {
+      "keywords": [
+        "舞台对决",
+        "双人能力秀",
+        "户外舞台",
+        "观众视角",
+        "现场演出",
+        "能力对抗",
+        "特摄舞台",
+        "主题公园剧场",
+        "漫展户外舞台",
+        "一镜到底"
+      ],
+      "node_scopes": [
+        "textGeneration",
+        "imageGeneration",
+        "videoGeneration",
+        "audioGeneration"
+      ]
+    },
+    "input_parameters": [
+      {
+        "id": "aspect_ratio",
+        "label": "画幅",
+        "type": "single_select",
+        "required": true,
+        "default": "16:9",
+        "options": [
+          "9:16",
+          "16:9"
+        ]
+      },
+      {
+        "id": "resolution",
+        "label": "清晰度",
+        "type": "single_select",
+        "required": true,
+        "default": "720p",
+        "options": [
+          "720p",
+          "1080p"
+        ]
+      },
+      {
+        "id": "venue_type",
+        "label": "舞台场景",
+        "type": "single_select",
+        "required": true,
+        "default": "户外主题公园剧场",
+        "options": [
+          "户外主题公园剧场",
+          "露天广场舞台",
+          "节庆舞台",
+          "漫展户外区",
+          "夜间舞台"
+        ]
+      },
+      {
+        "id": "vo_language",
+        "label": "旁白语言",
+        "type": "single_select",
+        "required": true,
+        "default": "日语短句",
+        "options": [
+          "日语短句",
+          "中文短句",
+          "英文短句",
+          "无旁白"
+        ]
+      }
+    ],
+    "allowed_recipe_ids": [
+      "outdoor-stage-duel-storyboard",
+      "outdoor-stage-duel-key-elements",
+      "outdoor-stage-duel-shot-video",
+      "outdoor-stage-duel-audio-layers"
+    ],
+    "planning": {
+      "planning_notes": "动态执行路径：先根据 aspect_ratio、resolution、venue_type、vo_language、用户角色/能力描述和画布素材判断入口。正式生成节点前先在 Skill 层整理创意规格，锁定每条视频 15 秒、一个视频对应一个 shot、双角色 A/B、双方能力、舞台站位、冲突关系、画幅、清晰度、户外舞台真实感和旁白语言；这个规格不创建独立节点。若用户只给一个角色，必须先补全或提出第二个原创对手/搭档，不得直接做单人能力展示。规格整理后创建分镜：每条视频只设计 1 个 shot，用 Beat 1 → Beat 2 → Beat 3 → Beat 4 → Final beat 写一镜到底内部升级，不用秒数和硬切。分镜完成后创建关键元素阶段，并按可独立引用的资产分别创建独立关键元素节点：Character A、Character B、完整户外舞台/剧场空间、关键道具、双方能力效果源；不创建 audience POV 资产。不得把多个主体合并成一张关键元素总图，只有始终作为同一整体被下游引用的资产才可共用一个节点。关键元素完成后创建单镜视频，每条 15 秒视频引用已确认 Character A、Character B、舞台/场景和必要道具/效果源；先只生成视觉，不生成 VO/BGM。视觉视频完成后创建音频层，一次生成 VO 和 BGM 提示。最后自动创建成片合成节点，将所有单镜视频和音频层按播放顺序接入；BGM 默认 0.7、VO 默认 1.0，每条视频末尾淡出 2 秒。",
+      "prompt_guide": "核心是观众第一人称看户外舞台上的双人超自然演出/对决。镜头像观众眼睛或手机镜头，但不能出现手机机身、录制界面、屏中屏或居中的大手机。默认不是专业机位、无人机、广播机位或第三人称电影镜头。每条 15 秒视频是一条连续手持长镜头，内部节奏只写 narrative beats，不写时间戳、不写 hard cut/switch angle/new shot。角色必须像真实舞台演员/特技演员，真实人体比例、布料褶皱、皮革/金属/护甲质感、道具有重量；能力效果必须翻译成舞台灯光、烟雾、火圈、LED 光幕、光柱、冲击波、投影和现场后期增强。",
+      "conduct_rules": [
+        "默认双角色 A/B；用户只给一个角色时必须补全或询问第二个原创对手/搭档，不得默认单人能力秀。",
+        "如果用户提到知名动漫/游戏角色，只能当灵感；不得在分镜或提示词里写官方角色名、作品名、招式名、组织名、村名、标志台词、徽章或图案。",
+        "每条 15 秒视频只对应 1 个 shot；内部升级用 Beat 1/2/3/4/Final beat，不用秒数，不拆多个 shot。",
+        "关键元素阶段必须拆成多个独立节点，至少包含 Element_Character_A、Element_Character_B 和完整舞台空间；双方能力效果源、核心道具或特殊舞台装置如需跨镜引用，也必须各自独立成节点。观众 POV 是 shot 约束，不是单独资产。",
+        "Shot 必须采用三层构图：前景观众头肩/手臂/少量边缘手机，中景舞台与双角色，背景户外剧场建筑/灯架/旗帜/天空/烟层。",
+        "每个 Beat 都必须保留另一名角色作为目标、防守者、反应者或空间锚点，不能变成两个独立 showcase。",
+        "命中反馈必须具体到重心、脚步、护脸、滑步、弯膝、支撑和恢复平衡；特效不能代替身体反应。",
+        "观众反应要按阵营变化：A 占优时 A 支持者欢呼，B 反击时另一侧观众起身、举手、手机晃动。",
+        "视频提示词默认 no music、no subtitles；VO 和 BGM 只在视觉视频完成后单独生成。"
+      ]
+    },
+    "evaluation": {
+      "rating_bands": [
+        {
+          "score": 5,
+          "description": "双角色舞台关系清楚，观众 POV 长镜头稳定，三层构图、IP 规避、舞台特效、命中反馈、阵营观众反应和阶段边界都完整。"
+        },
+        {
+          "score": 3,
+          "description": "基本符合舞台对决，但角色 B、前景观众、真实舞台质感、命中反馈、IP 改写或音频分阶段处理有缺漏。"
+        },
+        {
+          "score": 1,
+          "description": "做成单人能力展示、专业电影机位、第三人称镜头、硬切多镜、官方 IP 直写、居中手机屏录或纯 CG 竞技场。"
+        }
+      ],
+      "visual_review_items": [
+        {
+          "name": "观众 POV",
+          "weight": 1.5,
+          "description": "镜头必须像观众眼睛/手机镜头的现场长镜头，但不能显示录制设备或界面。"
+        },
+        {
+          "name": "双角色关系",
+          "weight": 1.4,
+          "description": "A/B 必须同处一个舞台坐标系，攻防、反应和高潮发生在两者之间。"
+        },
+        {
+          "name": "现场真实感",
+          "weight": 1.2,
+          "description": "前景观众、舞台建筑、灯光烟雾、道具材质和身体受力反馈都要可信。"
+        }
+      ],
+      "text_review_items": [
+        {
+          "name": "单镜规则",
+          "weight": 1,
+          "description": "每条 15 秒视频只对应 1 个 shot，内部用 narrative beats，不写时间戳或硬切。"
+        },
+        {
+          "name": "IP 规避",
+          "weight": 1,
+          "description": "知名角色必须改成原创舞台演员设定，删除官方名称、标志和招式。"
+        },
+        {
+          "name": "音频分离",
+          "weight": 1,
+          "description": "视频阶段不生成 VO/BGM；视觉视频完成后再生成短 VO 和纯器乐/音效 BGM。"
+        }
+      ],
+      "quality_threshold": 4,
+      "domain_constraints": [
+        "不得创建 audience POV key element。",
+        "不得使用官方动漫/游戏角色名、招式名、组织名、徽章或标志台词。",
+        "不得出现居中大手机、录制 UI、屏中屏、第三人称电影机位、无人机镜头、硬切或多 shot 切换。"
+      ]
+    }
+  },
+  "recipes": [
+    {
+      "schema_version": "dramaclaw.recipe.v1",
+      "id": "outdoor-stage-duel-storyboard",
+      "enabled": true,
+      "version": "1.0.0",
+      "name": "舞台对决分镜",
+      "output_kind": "text",
+      "action_keys": [
+        "outdoor-stage-duel-storyboard"
+      ],
+      "system_prompt": "你将根据已确认的创意规格、开始前选项、用户素材分析和确认记录，直接生成 Storyboard。你的输出就是最终分镜；只输出成品，不要解释。\n\n最终输出必须包含中文 Markdown，并使用【分镜设计】作为阶段标题。先输出【Key Elements】表格：element_id、类型、名称、来源、外观/场景/能力描述、需绑定/需生成、确认状态。每个项目至少包含 element scene、Element_Character_A、Element_Character_B；观众 POV 是 shot 约束，禁止创建 audience POV key element。\n\n再输出【Shot List】表格：每条目标视频只创建 1 个 shot。列包含 clip_id、shot_id、舞台坐标系、三层构图、Character A 站位/动作、Character B 站位/反应、能力冲突中心、Beat 1、Beat 2、Beat 3、Beat 4、Final beat、观众阵营反应、相机运动、引用元素、Audio_BGM、Audio_VO、确认状态。Beat 是同一个一镜到底长镜头里的节奏升级，不是多个 shot，不得写秒数、hard cut、switch angle、new shot 或 camera cut。\n\n每个 Beat 必须包含 A 动作、B 反应/防守/反击、两者之间或中心舞台的可见爆点、观众第一视角反应。命中反馈必须写半步后退、滑步、重心降低、护脸、弯膝、支撑或恢复平衡，不得只写“被击中”。末尾写：请确认/修改/重生成分镜，确认后进入【关键元素】阶段。",
+      "must_have_items": [
+        "【Key Elements】",
+        "【Shot List】",
+        "Element_Character_A",
+        "Element_Character_B",
+        "三层构图",
+        "Beat 1",
+        "Beat 2",
+        "Beat 3",
+        "Final beat",
+        "Audio_BGM",
+        "Audio_VO"
+      ],
+      "planning_prompt": "直接生成户外舞台双人对决 Storyboard、Key Elements、单镜 Beat 结构和音频层规划。",
+      "result_summary": "户外舞台观众 POV 双人对决分镜。",
+      "requires_source_media": false,
+      "force_enhancement": false,
+      "skip_detail_check": true
+    },
+    {
+      "schema_version": "dramaclaw.recipe.v1",
+      "id": "outdoor-stage-duel-key-elements",
+      "enabled": true,
+      "version": "1.0.0",
+      "name": "舞台对决关键元素",
+      "output_kind": "image",
+      "action_keys": [
+        "outdoor-stage-duel-key-elements"
+      ],
+      "system_prompt": "你将把一个已确认的 key_element、用户参考图/视频/舞台素材分析、创意规格和 Storyboard，转换成可直接送入 imageGeneration 节点执行的单一关键元素图像提示词。重要：你的输出是一条下游节点提示词/指令，不是最终图像；只输出提示词，不要解释。\n\n每次调用只处理一个 key_element，只生成一个可被下游视频节点引用的关键元素图。禁止把 Character A、Character B、舞台空间、道具和效果源合并成一张总图；如果需要多个关键元素，必须由上游工作流分别创建多个 imageGeneration 节点。纯临时烟雾、光轨、一次性冲击波可留给视频提示词描述，不必生成独立资产。\n\n若 key_element 是角色参考，必须输出同一原创舞台演员/特技演员的一张全身三视图设定参考图：正面、侧面、背面，中性站姿。三视图中的面部、发型、服装、护甲、鞋靴、随身道具位置、材质和配色必须完全一致，用于锁定下游视频里角色从不同角度出现时的身份与装备结构；不承载战斗动作、能力爆发、完整舞台或剧情。一个角色仍只对应一个关键元素节点，不要拆成三张独立图片。角色必须是真实人体比例、真实皮肤灯光、布料褶皱、皮革/金属/护甲材料、假发/面具/护目镜/手套/道具有重量感、舞台汗水/灰尘，并明确它是 Element_Character_A 或 Element_Character_B。必须规避官方 IP：不出现官方角色名、徽章、头带、脸部标记、标志服装组合或招式符号。禁止 cartoon、anime figure、game CG、塑料玩具、布偶套装和 mascot suit。\n\n若 key_element 是舞台空间，必须展示完整户外演出空间：观众方向、舞台平台、左右/中心站位区、背景建筑/台阶/灯架/旗帜、天空或夜景、烟雾层、关键光色和真实人群密度。禁止生成“观众 POV 图片资产”；需要观众真实感时写入场景或视频提示词，不得生成居中大手机、录制 UI、屏中屏或手机屏幕复制舞台动作。\n\n若 key_element 是道具或效果源，必须让主体单独清晰、便于后续引用，说明它属于哪一方、在舞台上的使用方式和材质/光效边界，不得加入无关角色或完整剧情动作。",
+      "must_have_items": [
+        "单一 key_element 名称和类型",
+        "下游引用用途",
+        "角色元素为同一角色正面、侧面、背面的全身三视图",
+        "三视图服装、装备、材质和配色一致",
+        "原创舞台演员或完整舞台空间或单一道具/效果源",
+        "主体单独清晰",
+        "材质/光效边界",
+        "不生成 audience POV",
+        "无官方徽章",
+        "无录制 UI",
+        "无屏中屏"
+      ],
+      "planning_prompt": "根据指定 key_element，生成户外舞台双人对决中一个可复用关键元素的图像生成提示词；角色元素输出一张全身三视图设定参考图。",
+      "result_summary": "户外舞台双人对决单一关键元素图像生成提示词；角色元素为全身三视图设定参考图。",
+      "requires_source_media": false,
+      "force_enhancement": false,
+      "skip_detail_check": true
+    },
+    {
+      "schema_version": "dramaclaw.recipe.v1",
+      "id": "outdoor-stage-duel-shot-video",
+      "enabled": true,
+      "version": "1.0.0",
+      "name": "舞台对决单镜视频",
+      "output_kind": "video",
+      "action_keys": [
+        "outdoor-stage-duel-shot-video"
+      ],
+      "system_prompt": "你将把已确认的 Character A、Character B、stage/scene、道具/效果源、Storyboard 当前 clip 的单镜 Beat 结构和创意规格，转换成可直接送入 videoGeneration 节点执行的视频提示词。重要：你的输出是一条下游节点提示词/指令，不是最终视频；只输出提示词，不要解释。\n\n角色三视图参考图仅用于锁定同一角色在不同角度下的身份、服装、装备和材质；最终输出必须是一段单一连续舞台镜头，不得生成三视图、设定板、网格、拼图或角色副本。\n\n视频提示词必须按顺序组织：Camera perspective and long-take declaration → Three-layer composition and outdoor stage space → Two-character stage positioning and relationship → Live-action character appearance and ability trigger method → Realistic hit feedback → Internal narrative beats → Faction-based audience reaction and foreground props → Audio instructions → Avoid block。\n\n若 Skill 要求观众第一人称视角，开头必须表达：First-person audience POV from inside the crowd, camera equals the viewer's eyes / phone lens, no visible phone body, no recording interface, no screen-in-screen; continuous handheld long take with occasional event-driven digital zoom and short attention pan; foreground lower edge has audience heads, shoulders, raised arms and occasional small edge phones; stage remains the clear subject。\n\nBeat 结构必须保留 A/B 双角色：Beat 1 建立 POV、舞台和站位；Beat 2 第一次能力冲突；Beat 3 中心峰值碰撞和明确受力反馈；Beat 4 反击或第二个大爆点；Final beat 定格收束。特效必须落在真实舞台空间里，有烟雾遮挡、投影、反射、过曝、灯架/建筑/演员身体/观众脸部互动，不能像漂浮贴纸。Avoid block 至少包含字幕、水印、UI、visible phone body、recording interface、screen-in-screen、floating VFX sticker、large foreground smartphone、centered phone screen、hard cuts、switch angle、new shot、gore、injury、deformed hands；若 Skill 有额外禁用项，必须一并继承。",
+      "must_have_items": [
+        "First-person audience POV",
+        "no visible phone body",
+        "no recording interface",
+        "continuous handheld long take",
+        "Three-layer composition",
+        "Character A",
+        "Character B",
+        "Beat 1",
+        "Beat 3",
+        "Final beat",
+        "no subtitles"
+      ],
+      "planning_prompt": "根据确认的双角色、舞台关键元素和单镜 Beat 结构生成观众 POV 户外舞台对决视频提示词。",
+      "result_summary": "观众 POV 户外舞台双人对决视频生成提示词。",
+      "requires_source_media": true,
+      "force_enhancement": false,
+      "skip_detail_check": true
+    },
+    {
+      "schema_version": "dramaclaw.recipe.v1",
+      "id": "outdoor-stage-duel-audio-layers",
+      "enabled": true,
+      "version": "1.0.0",
+      "name": "舞台对决音频层",
+      "output_kind": "audio",
+      "action_keys": [
+        "outdoor-stage-duel-audio-layers"
+      ],
+      "system_prompt": "你将把已确认的 shot video 视觉节奏、Storyboard Audio_BGM_* / Audio_VO_*、开始前选项中的 vo_language，转换成可直接送入 audioGeneration 节点执行的 VO 与 BGM 生成提示词。重要：你的输出是一条下游节点提示词/指令，不是最终音频；只输出提示词，不要解释。\n\n只有在视觉视频完成后才使用本 Recipe。VO 只覆盖开场和收尾短句，不复述完整视觉动作；默认是短日语句子，语言必须跟随已确认的旁白语言。每条 Audio_VO_* 必须包含 narration_speaker_profile，例如 deep mysterious male、ethereal cool female、passionate male、energetic male，并标注应对齐 Beat 1 的开场或 Final beat 的结尾。\n\nAudio_BGM_* 必须是纯器乐/音效型 soundtrack，不含 vocals 或 lyrics。提示词应包含情绪关键词、核心音效类型、节奏特征和现场观众反应氛围，例如 Taiko drum、bass rumble、whoosh、lightning、fire、smoke impact、crowd gasps。若多条视频共用 BGM，必须复用同一 audio_id，不要重复创建。\n\n输出必须包含音频层名称、类型、适用视频/beat、生成提示词、音量和同步建议。默认 BGM volume 0.7，VO volume 1.0；每条视频末尾 2 秒淡出，但不能切断 VO。BGM 能量峰值对齐 Beat 3，开场不要过早拉满。",
+      "must_have_items": [
+        "Audio_BGM",
+        "Audio_VO",
+        "opening",
+        "closing",
+        "narration_speaker_profile",
+        "no vocals",
+        "no lyrics",
+        "BGM volume 0.7",
+        "VO volume 1.0",
+        "2秒淡出",
+        "Beat 3"
+      ],
+      "planning_prompt": "根据已完成视觉节奏生成户外舞台对决 VO、BGM 和同步混音提示词。",
+      "result_summary": "户外舞台双人对决 VO 与纯器乐/音效 BGM 生成提示词。",
+      "requires_source_media": false,
+      "force_enhancement": false,
+      "skip_detail_check": true
+    }
+  ]
+}

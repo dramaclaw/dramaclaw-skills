@@ -1,4 +1,80 @@
 {
   "schema_version": "dramaclaw.community-catalog.v1",
-  "items": []
+  "items": [
+    {
+      "id": "japanese-anime-drama-video",
+      "name": "日系漫剧梦工坊",
+      "version": "1.0.0",
+      "description": "适用于日系写实动漫风格的漫剧短片创作，涵盖青春情感、城市光影、错过与重逢等题材，支持中文（普通话/台湾华语）及日语等多语言风格的高密度对话短剧。",
+      "author": "DramaClaw",
+      "license": "Elastic-2.0",
+      "min_dramaclaw_version": "2.0.0",
+      "tags": [
+        "video",
+        "freezone",
+        "official"
+      ],
+      "bundle_url": "https://raw.githubusercontent.com/dramaclaw/dramaclaw-skills/main/skills/japanese-anime-drama-video/bundle.json"
+    },
+    {
+      "id": "lego-minifigure-animation-video",
+      "name": "乐高小人动画短片",
+      "version": "1.0.0",
+      "description": "把主题、角色、场景、冲突或参考素材发展成 LEGO Minifigure 风格动画短片，按剧本大纲、分镜规划、关键元素锚定和单段视频分阶段推进，保持乐高小人比例、积木场景逻辑和跨镜头一致性。",
+      "author": "DramaClaw",
+      "license": "Elastic-2.0",
+      "min_dramaclaw_version": "2.0.0",
+      "tags": [
+        "video",
+        "freezone",
+        "official"
+      ],
+      "bundle_url": "https://raw.githubusercontent.com/dramaclaw/dramaclaw-skills/main/skills/lego-minifigure-animation-video/bundle.json"
+    },
+    {
+      "id": "ling-cage-cinematic-video",
+      "name": "灵笼风格科幻短片",
+      "version": "1.0.0",
+      "description": "把灵感、角色设定、参考素材或脚本发展成灵笼风格半写实 3D 末世科幻动画短片，按故事脚本、分镜、关键元素、逐镜视频和音频层分阶段推进。",
+      "author": "DramaClaw",
+      "license": "Elastic-2.0",
+      "min_dramaclaw_version": "2.0.0",
+      "tags": [
+        "video",
+        "freezone",
+        "official"
+      ],
+      "bundle_url": "https://raw.githubusercontent.com/dramaclaw/dramaclaw-skills/main/skills/ling-cage-cinematic-video/bundle.json"
+    },
+    {
+      "id": "outdoor-stage-duel-video",
+      "name": "户外舞台双人能力秀",
+      "version": "1.0.0",
+      "description": "把角色描述、能力类型、舞台场景或高潮结构发展成观众第一视角的户外舞台双人能力对决短片，按创意规格、分镜、关键元素、单镜视频和音频层分阶段推进。",
+      "author": "DramaClaw",
+      "license": "Elastic-2.0",
+      "min_dramaclaw_version": "2.0.0",
+      "tags": [
+        "video",
+        "freezone",
+        "official"
+      ],
+      "bundle_url": "https://raw.githubusercontent.com/dramaclaw/dramaclaw-skills/main/skills/outdoor-stage-duel-video/bundle.json"
+    },
+    {
+      "id": "retro-hong-kong-kungfu-comedy-video",
+      "name": "港风功夫萌宠短片",
+      "version": "1.0.0",
+      "description": "把人物、宠物、动物参考或一句灵感发展成 80 年代复古香港功夫喜剧短片；先搭建包含剧本、分镜、关键元素、逐镜视频和音频层的完整工作流，再交由画布工作流分阶段执行。",
+      "author": "DramaClaw",
+      "license": "Elastic-2.0",
+      "min_dramaclaw_version": "2.0.0",
+      "tags": [
+        "video",
+        "freezone",
+        "official"
+      ],
+      "bundle_url": "https://raw.githubusercontent.com/dramaclaw/dramaclaw-skills/main/skills/retro-hong-kong-kungfu-comedy-video/bundle.json"
+    }
+  ]
 }
